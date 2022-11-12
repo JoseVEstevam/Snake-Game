@@ -13,3 +13,6 @@ Background jogo:
 
 Ponteiro:
 <a href="https://www.flaticon.com/br/icones-gratis/ponteiro-do-mouse" title="ponteiro do mouse ícones">Ponteiro do mouse ícones criados por Pixel perfect - Flaticon</a>
+
+Cobra menu:
+<a href="https://www.vecteezy.com/free-vector/snake-cartoon">Snake Cartoon Vectors by Vecteezy</a>
