@@ -4,7 +4,7 @@ import sys
 from math import ceil
 from lib.cobra import Cobra
 from lib.maca import Maca
-from lib.botoes import Botao
+from lib.botoes import Botao, BotaoCobra
 from lib.ponteiro import Ponteiro
 
 
@@ -13,6 +13,8 @@ class Jogo():
     def __init__(self) -> None:
         self.estado = 'menu'
         pygame.mouse.set_visible(False)
+        # pygame.mixer.music.load("")  # Adicionar música
+        # pygame.mixer.music.play()
 
     def menu(self):
         for event in pygame.event.get():
@@ -21,11 +23,12 @@ class Jogo():
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 ponteiro.som.play()
-            if event.type == pygame.MOUSEBUTTONUP:
-                self.estado = 'principal'
+                if pygame.sprite.spritecollide(ponteiro, grupo_botao, False):
+                    self.estado = 'principal'
 
         DISPLAY.blit(BACKGROUND_MENU, (0, 0))
         grupo_botao.draw(DISPLAY)
+        grupo_cobra_menu.draw(DISPLAY)
 
         ponteiro_grupo.draw(DISPLAY)
         ponteiro_grupo.update()
@@ -33,6 +36,7 @@ class Jogo():
         pygame.display.flip()
 
     def principal(self):
+        # pygame.mixer.music.stop()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -80,11 +84,13 @@ ponteiro_grupo.add(ponteiro)
 BACKGROUND_MENU = pygame.image.load("gfx/menu_background.jpg")
 
 # Configurações dos botões menu
+cobra_menu = BotaoCobra("gfx/cobra_menu.png", (440, 400))
+grupo_cobra_menu = pygame.sprite.Group()
+grupo_cobra_menu.add(cobra_menu)
+
 grupo_botao = pygame.sprite.Group()
-
-botao_play = Botao(300, 75, (WHITE), (int(
-    DISPLAY_X / 2), int(DISPLAY_Y / 2) + 75))
-
+botao_play = Botao(
+    "gfx/play.png", (int(DISPLAY_X / 2), int(DISPLAY_Y / 2) + 90))
 grupo_botao.add(botao_play)
 
 # Configurações da tela de fundo jogo
