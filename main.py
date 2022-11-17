@@ -2,8 +2,7 @@
 import pygame
 import sys
 from math import ceil
-from lib.cobra import Cobra
-from lib.maca import Maca
+from lib.atores import Cobra, Maca
 from lib.botoes import Botao, BotaoCobra
 from lib.ponteiro import Ponteiro
 
