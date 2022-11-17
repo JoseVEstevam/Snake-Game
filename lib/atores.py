@@ -7,25 +7,42 @@ class Cobra(pygame.sprite.Sprite):
     def __init__(self, width, height, color, pos: tuple) -> None:
         super().__init__()
         self.posx, self.posy = pos
-        self.image = pygame.surface.Surface((width, height))
-        self.image.fill(color)
-        self.rect = self.image.get_rect()
+        self.cabeca: list = []
+        self.cauda: list = []
+        self.corpo: list = []
+        self.cobra = pygame.image.load("gfx/snake_sprite.png")
+        for y in range(2):
+            for x in range(3, 5):
+                img = self.cobra.subsurface((64 * x, 64 * y), (64, 64))
+                img = pygame.transform.scale(
+                    img, (64 * 0.8, 64 * 0.8))
+                self.cabeca.append(img)
+        self.index = 0
+        self.image = self.cabeca[self.index]
+        self.rect = self.image.get_rect()  # type: ignore
         self.rect.center = (self.posx, self.posy)
 
     def update(self) -> None:
+
         buttons = pygame.key.get_pressed()
         if buttons[pygame.K_a]:
+            self.index = 2
             self.posx -= 10
 
         if buttons[pygame.K_d]:
+            self.index = 1
             self.posx += 10
 
         if buttons[pygame.K_w]:
+            self.index = 0
             self.posy -= 10
 
         if buttons[pygame.K_s]:
+            self.index = 3
             self.posy += 10
 
+        self.image = self.cabeca[self.index]
+        self.rect = self.image.get_rect()  # type: ignore
         self.rect.center = (self.posx, self.posy)  # type: ignore
 
 
