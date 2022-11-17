@@ -14,15 +14,15 @@ class Cobra(pygame.sprite.Sprite):
     def update(self) -> None:
         buttons = pygame.key.get_pressed()
         if buttons[pygame.K_a]:
-            self.posx -= 10
+            self.posx -= 1
 
         if buttons[pygame.K_d]:
-            self.posx += 10
+            self.posx += 1
 
         if buttons[pygame.K_w]:
-            self.posy -= 10
+            self.posy -= 1
 
         if buttons[pygame.K_s]:
-            self.posy += 10
+            self.posy += 1
 
         self.rect.center = (self.posx, self.posy)  # type: ignore

@@ -43,6 +43,7 @@ class Jogo():
                 sys.exit()
 
         self.preencher_tela()
+        self.bordas()
 
         grupo_maca.draw(DISPLAY)
 
@@ -64,6 +65,19 @@ class Jogo():
                 DISPLAY.blit(BACKGROUND_JOGO,
                              (x * BACKGROUND_X, y * BACKGROUND_Y))
 
+    @staticmethod
+    def bordas():
+        for x in range(ceil(DISPLAY_X / PEDRA_X)):
+            for y in range(ceil(DISPLAY_Y / PEDRA_Y)):
+                if x == 0:
+                    DISPLAY.blit(PEDRA, (x * PEDRA_X, y * PEDRA_Y))
+                if y == 0:
+                    DISPLAY.blit(PEDRA, (x * PEDRA_X, y * PEDRA_Y))
+                if x == 27:
+                    DISPLAY.blit(PEDRA, (x * PEDRA_X, y * PEDRA_Y))
+                if y == 20:
+                    DISPLAY.blit(PEDRA, (x * PEDRA_X, y * PEDRA_Y))
+
 
 pygame.init()
 
@@ -71,8 +85,8 @@ pygame.init()
 WHITE = (255, 255, 255)
 
 # Configurações da janela
-DISPLAY_X = 1280
-DISPLAY_Y = 720
+DISPLAY_X = 1260
+DISPLAY_Y = 710
 DISPLAY = pygame.display.set_mode((DISPLAY_X, DISPLAY_Y))
 
 # Ponteiro do mouse
@@ -109,6 +123,11 @@ grupo_cobra.add(cobra)
 maca = Maca(35, 35, (255, 0, 0), (500, 200))
 grupo_maca = pygame.sprite.Group()
 grupo_maca.add(maca)
+
+# Configurações bordas
+PEDRA = pygame.image.load("gfx/pedra.png")
+PEDRA_X = PEDRA.get_width()
+PEDRA_Y = PEDRA.get_height()
 
 # Configurações gerais
 clock = pygame.time.Clock()
