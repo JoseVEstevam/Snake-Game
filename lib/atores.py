@@ -6,6 +6,7 @@ class Cobra(pygame.sprite.Sprite):
 
     def __init__(self, width, height, color, pos: tuple) -> None:
         super().__init__()
+        self.x, self.y = 5, 0
         self.posx, self.posy = pos
         self.cabeca: list = []
         self.cauda: list = []
@@ -25,21 +26,67 @@ class Cobra(pygame.sprite.Sprite):
     def update(self) -> None:
 
         buttons = pygame.key.get_pressed()
-        if buttons[pygame.K_a]:
-            self.index = 2
-            self.posx -= 10
+        if self.x > 0:
+            if buttons[pygame.K_d]:
+                self.index = 1
+                self.y = 0
+                self.x = 5
 
-        if buttons[pygame.K_d]:
-            self.index = 1
-            self.posx += 10
+            if buttons[pygame.K_w]:
+                self.index = 0
+                self.y = -5
+                self.x = 0
 
-        if buttons[pygame.K_w]:
-            self.index = 0
-            self.posy -= 10
+            if buttons[pygame.K_s]:
+                self.index = 3
+                self.y = 5
+                self.x = 0
+        elif self.x < 0:
+            if buttons[pygame.K_a]:
+                self.index = 2
+                self.y = 0
+                self.x = -5
+            if buttons[pygame.K_w]:
+                self.index = 0
+                self.y = -5
+                self.x = 0
 
-        if buttons[pygame.K_s]:
-            self.index = 3
-            self.posy += 10
+            if buttons[pygame.K_s]:
+                self.index = 3
+                self.y = 5
+                self.x = 0
+        if self.y > 0:
+            if buttons[pygame.K_a]:
+                self.index = 2
+                self.y = 0
+                self.x = -5
+
+            if buttons[pygame.K_d]:
+                self.index = 1
+                self.y = 0
+                self.x = 5
+            if buttons[pygame.K_s]:
+                self.index = 3
+                self.y = 5
+                self.x = 0
+        elif self.y < 0:
+            if buttons[pygame.K_a]:
+                self.index = 2
+                self.y = 0
+                self.x = -5
+
+            elif buttons[pygame.K_d]:
+                self.index = 1
+                self.y = 0
+                self.x = 5
+
+            if buttons[pygame.K_w]:
+                self.index = 0
+                self.y = -5
+                self.x = 0
+
+        self.posx += self.x
+        self.posy += self.y
 
         self.image = self.cabeca[self.index]
         self.rect = self.image.get_rect()  # type: ignore
