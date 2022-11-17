@@ -49,6 +49,9 @@ class Jogo():
         grupo_cobra.draw(DISPLAY)
         grupo_cobra.update()
 
+        if pygame.sprite.collide_rect(cobra, maca):
+            grupo_maca.update()
+
         pygame.display.flip()
 
     def controle_tela(self):
@@ -119,7 +122,7 @@ grupo_cobra = pygame.sprite.Group()
 grupo_cobra.add(cobra)
 
 # Configurações maçã
-maca = Maca(35, 35, (255, 0, 0), (500, 200))
+maca = Maca(DISPLAY_X, DISPLAY_Y)
 grupo_maca = pygame.sprite.Group()
 grupo_maca.add(maca)
 
