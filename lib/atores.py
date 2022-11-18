@@ -4,8 +4,9 @@ from random import randint
 
 class Cobra(pygame.sprite.Sprite):
 
-    def __init__(self, width, height, color, pos: tuple) -> None:
+    def __init__(self, pos: tuple,  velocidade) -> None:
         super().__init__()
+        self.velocidade = velocidade
         self.x, self.y = 5, 0
         self.posx, self.posy = pos
         self.cabeca: list = []
@@ -18,72 +19,32 @@ class Cobra(pygame.sprite.Sprite):
                 img = pygame.transform.scale(
                     img, (64 * 0.8, 64 * 0.8))
                 self.cabeca.append(img)
-        self.index = 0
+        self.index = 1
         self.image = self.cabeca[self.index]
         self.rect = self.image.get_rect()  # type: ignore
         self.rect.center = (self.posx, self.posy)
 
     def update(self) -> None:
 
-        buttons = pygame.key.get_pressed()
+        self.buttons = pygame.key.get_pressed()
+
         if self.x > 0:
-            if buttons[pygame.K_d]:
-                self.index = 1
-                self.y = 0
-                self.x = 5
-
-            if buttons[pygame.K_w]:
-                self.index = 0
-                self.y = -5
-                self.x = 0
-
-            if buttons[pygame.K_s]:
-                self.index = 3
-                self.y = 5
-                self.x = 0
+            self.direita()
+            self.cima()
+            self.baixo()
         elif self.x < 0:
-            if buttons[pygame.K_a]:
-                self.index = 2
-                self.y = 0
-                self.x = -5
-            if buttons[pygame.K_w]:
-                self.index = 0
-                self.y = -5
-                self.x = 0
+            self.esquerda()
+            self.cima()
+            self.baixo()
 
-            if buttons[pygame.K_s]:
-                self.index = 3
-                self.y = 5
-                self.x = 0
         if self.y > 0:
-            if buttons[pygame.K_a]:
-                self.index = 2
-                self.y = 0
-                self.x = -5
-
-            if buttons[pygame.K_d]:
-                self.index = 1
-                self.y = 0
-                self.x = 5
-            if buttons[pygame.K_s]:
-                self.index = 3
-                self.y = 5
-                self.x = 0
+            self.esquerda()
+            self.direita()
+            self.baixo()
         elif self.y < 0:
-            if buttons[pygame.K_a]:
-                self.index = 2
-                self.y = 0
-                self.x = -5
-
-            elif buttons[pygame.K_d]:
-                self.index = 1
-                self.y = 0
-                self.x = 5
-
-            if buttons[pygame.K_w]:
-                self.index = 0
-                self.y = -5
-                self.x = 0
+            self.esquerda()
+            self.direita()
+            self.cima()
 
         self.posx += self.x
         self.posy += self.y
@@ -91,6 +52,33 @@ class Cobra(pygame.sprite.Sprite):
         self.image = self.cabeca[self.index]
         self.rect = self.image.get_rect()  # type: ignore
         self.rect.center = (self.posx, self.posy)  # type: ignore
+
+    def colocar_corpo(self):
+        pass
+
+    def esquerda(self):
+        if self.buttons[pygame.K_a]:
+            self.index = 2
+            self.y = 0
+            self.x = -self.velocidade
+
+    def direita(self):
+        if self.buttons[pygame.K_d]:
+            self.index = 1
+            self.y = 0
+            self.x = self.velocidade
+
+    def cima(self):
+        if self.buttons[pygame.K_w]:
+            self.index = 0
+            self.y = -self.velocidade
+            self.x = 0
+
+    def baixo(self):
+        if self.buttons[pygame.K_s]:
+            self.index = 3
+            self.y = self.velocidade
+            self.x = 0
 
 
 class Maca(pygame.sprite.Sprite):

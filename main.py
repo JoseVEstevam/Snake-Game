@@ -36,6 +36,8 @@ class Jogo():
 
     def principal(self):
         # pygame.mixer.music.stop()
+        pontuacao = 0
+        tamanho_cobra = 3
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -50,15 +52,22 @@ class Jogo():
         grupo_cobra.update()
 
         if pygame.sprite.collide_rect(cobra, maca):
+            pontuacao += 1
+            tamanho_cobra += 1
             grupo_maca.update()
 
         pygame.display.flip()
+
+    def pausa(self):
+        pass
 
     def controle_tela(self):
         if self.estado == 'menu':
             self.menu()
         elif self.estado == 'principal':
             self.principal()
+        elif self.estado == 'pausa':
+            self.pausa()
 
     @staticmethod
     def preencher_tela():
@@ -115,9 +124,9 @@ BACKGROUND_X = BACKGROUND_JOGO.get_width()
 BACKGROUND_Y = BACKGROUND_JOGO.get_height()
 
 # Configurações da Cobra
-cobra_x = int(DISPLAY_X / 2 - 35 / 2)
-cobra_y = int(0.80 * DISPLAY_Y)
-cobra = Cobra(35, 35, (138, 154, 91), (cobra_x, cobra_y))
+cobra_x = int(DISPLAY_X - (0.8 * DISPLAY_X))
+cobra_y = int(0.8 * DISPLAY_Y)
+cobra = Cobra((cobra_x, cobra_y), 4)
 grupo_cobra = pygame.sprite.Group()
 grupo_cobra.add(cobra)
 
@@ -135,6 +144,7 @@ PEDRA_Y = PEDRA.get_height()
 clock = pygame.time.Clock()
 jogo = Jogo()
 
+# Jogo
 while True:
 
     jogo.controle_tela()
